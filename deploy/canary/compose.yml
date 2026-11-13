@@ -8,6 +8,9 @@ services:
     image: nginx:stable-alpine
     ports:
       - "8080:80"
+    # On monte le DOSSIER (pas le fichier) : un éditeur ou « sed -i » remplace le fichier,
+    # et un montage de fichier unique garderait l'ancienne version dans le conteneur.
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./:/conf:ro
+    command: ["nginx", "-c", "/conf/nginx.conf", "-g", "daemon off;"]
     depends_on: [stable, canary]
