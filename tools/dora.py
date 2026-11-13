@@ -41,8 +41,10 @@ def fmt(seconds):
 
 
 def main():
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help") or "/" not in sys.argv[1]:
         sys.exit(__doc__)
+    if subprocess.run(["gh", "auth", "status"], capture_output=True).returncode != 0:
+        sys.exit("La CLI `gh` doit être installée et connectée : gh auth login")
     repo = sys.argv[1]
     env = sys.argv[2] if len(sys.argv) > 2 else "production"
 
