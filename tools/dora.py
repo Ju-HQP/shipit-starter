@@ -16,9 +16,10 @@ from datetime import datetime
 
 
 def gh(path):
-    out = subprocess.run(
-        ["gh", "api", "--paginate", path], capture_output=True, text=True, check=True
-    ).stdout
+    res = subprocess.run(["gh", "api", "--paginate", path], capture_output=True, text=True)
+    if res.returncode != 0:
+        sys.exit(f"Échec de la requête GitHub ({path}) : {res.stderr.strip() or 'dépôt introuvable ou accès refusé ?'}")
+    out = res.stdout
     # --paginate concatène des tableaux JSON : on les réunit
     decoder, idx, items = json.JSONDecoder(), 0, []
     out = out.strip()
