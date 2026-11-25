@@ -14,3 +14,7 @@ Création du fichier ci-yml et rédaction de la config.
 - git add *
 - git commit -m "ci: ajoute le workflow de tests "
 - git push
+
+## Jalon 4
+
+![Workflow CI 2 coches vertes](image.png)
